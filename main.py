@@ -20,28 +20,28 @@ def print_result(result):
         print('{}: {}'.format(type(e), str(e)))
         print('.\n.\n.')
 
-def export_result(result):
+def export_result(directory, result):
 
     while True:
         print('What kind of file would you like to export the result?')
         x = input('[1].json [2].csv [3].xlsx [4] Above all (Enter r to return): ')
         if x == '1':
             filename = input('Please enter the filename: ')
-            export.to_json(result, filename)
+            export.to_json(result, directory, filename)
             break
         elif x == '2':
             filename = input('Please enter the filename: ')
-            export.to_csv(result, filename)
+            export.to_csv(result, directory, filename)
             break
         elif x == '3':
             filename = input('Please enter the filename: ')
-            export.to_excel(result, filename)
+            export.to_excel(result, directory, filename)
             break
         elif x == '4':
             filename = input('Please enter the filename: ')
-            export.to_json(result, filename)
-            export.to_csv(result, filename)
-            export.to_excel(result, filename)
+            export.to_json(result, directory, filename)
+            export.to_csv(result, directory, filename)
+            export.to_excel(result, directory, filename)
             break
         elif x == 'r':
             print('Return to Start Menu.')
@@ -53,6 +53,7 @@ def export_result(result):
 
 def start_menu():
 
+    directory = './result/'
     result = None
     while True:
         print('Which command would you like to do?')
@@ -81,8 +82,9 @@ def start_menu():
             while not filename.endswith('.json'):
                 filename = input('Please enter a JSON filename: ')
 
+            path = directory + filename
             try:
-                with open(filename) as f:
+                with open(path) as f:
                     result = json.load(f)
                     print('Result is loaded.')
             except Exception as e:
@@ -93,11 +95,10 @@ def start_menu():
                 print_result(result)
             else:
                 print('No result yet...')
-                print('.\n.\n.')
+            print('.\n.\n.')
         elif ans == 'd':
             if result:
-                print('.\n.\n.')
-                export_result(result)
+                export_result(directory, result)
             else:
                 print('No result yet...')
                 print('.\n.\n.')

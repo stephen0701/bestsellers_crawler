@@ -2,7 +2,6 @@ import pandas as pd
 import json
 import re
 
-DIR = './result/'
 def convert_to_df(data):
     d = {}
     try:
@@ -24,13 +23,13 @@ def convert_to_df(data):
         print('.\n.\n.')
     return df
 
-def to_json(data, filename):
+def to_json(data, directory, filename):
     if not filename:
         filename = 'default'
     if not filename.endswith('.json'):
         filename += '.json'
 
-    path = DIR + filename
+    path = directory + filename
     try:
         with open(path, 'w') as f:
             json.dump(data, f, ensure_ascii=False)
@@ -38,13 +37,13 @@ def to_json(data, filename):
     except Exception as e:
         print('{} : {}'.format(type(e), str(e)))
 
-def to_csv(data, filename):
+def to_csv(data, directory, filename):
     if not filename:
         filename = 'default'
     if not filename.endswith('.csv'):
         filename += '.csv'
     
-    path = DIR + filename
+    path = directory + filename
     try:
         df = convert_to_df(data)
         df.to_csv(path, encoding='utf_8_sig')
@@ -52,13 +51,13 @@ def to_csv(data, filename):
     except Exception as e:
         print('{} : {}'.format(type(e), str(e)))
 
-def to_excel(data, filename):
+def to_excel(data, directory, filename):
     if not filename:
         filename = 'default'
     if not filename.endswith('.xlsx'):
         filename += '.xlsx'
     
-    path = DIR + filename
+    path = directory + filename
     try:
         df = convert_to_df(data)
         ILLEGAL_CHARACTERS_RE = re.compile(r'[\000-\010]|[\013-\014]|[\016-\037]')
