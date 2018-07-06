@@ -13,7 +13,7 @@ python main.py
 ```
   
   
-### Crawler Feature
+### Software Features
 - Parse latest bestsellers with category, title and price info
 - Export result as .csv and .xlsx (stored in *result* folder)
   
@@ -23,12 +23,12 @@ python main.py
 2. A popup menu is attched to each category.
 3. Enter every category link to find further information
   
-![Main Page](./img/main.png)
+![Main Page](./img/homepage.png)
   
 4. There is a HOT PICKS section at the right bottom corner of the category page  
 5. Fetch the products as bestsellers  
   
-![Category Page](./img/product.png)
+![Category Page](./img/category.png)
 
 ### Limitations
 - The crawler is dependent on current website structure.
