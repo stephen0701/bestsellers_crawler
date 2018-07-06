@@ -3,6 +3,9 @@ import json
 import re
 
 def convert_to_df(data):
+    """
+    Convert result to DataFrame structure
+    """
     d = {}
     try:
         for menuName, cat in data.items():
@@ -24,6 +27,9 @@ def convert_to_df(data):
     return df
 
 def to_json(data, directory, filename):
+    """
+    Export result to a .json file
+    """
     if not filename:
         filename = 'default'
     if not filename.endswith('.json'):
@@ -33,11 +39,14 @@ def to_json(data, directory, filename):
     try:
         with open(path, 'w') as f:
             json.dump(data, f, ensure_ascii=False)
-        print('{} is written successfully'.format(filename))
+        print('{} is saved successfully'.format(filename))
     except Exception as e:
         print('{} : {}'.format(type(e), str(e)))
 
 def to_csv(data, directory, filename):
+    """
+    Export result to a .csv file
+    """
     if not filename:
         filename = 'default'
     if not filename.endswith('.csv'):
@@ -47,11 +56,14 @@ def to_csv(data, directory, filename):
     try:
         df = convert_to_df(data)
         df.to_csv(path, encoding='utf_8_sig')
-        print('{} is written successfully'.format(filename))
+        print('{} is saved successfully'.format(filename))
     except Exception as e:
         print('{} : {}'.format(type(e), str(e)))
 
 def to_excel(data, directory, filename):
+    """
+    Export result to a .xlsx file
+    """
     if not filename:
         filename = 'default'
     if not filename.endswith('.xlsx'):
@@ -60,9 +72,12 @@ def to_excel(data, directory, filename):
     path = directory + filename
     try:
         df = convert_to_df(data)
+
+        # replace the illegal character
         ILLEGAL_CHARACTERS_RE = re.compile(r'[\000-\010]|[\013-\014]|[\016-\037]')
         df = df.applymap(lambda x: ILLEGAL_CHARACTERS_RE.sub(r'', x) if isinstance(x, str) else x)
+        
         df.to_excel(path, encoding='utf_8_sig')
-        print('{} is written successfully'.format(filename))
+        print('{} is saved successfully'.format(filename))
     except Exception as e:
         print('{}: {}'.format(type(e), str(e)))

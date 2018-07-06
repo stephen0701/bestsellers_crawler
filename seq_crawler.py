@@ -5,13 +5,18 @@ import pandas as pd
 from collections import defaultdict
 
 class yCrawler():
-
+    """
+    A sequential crawler 
+    """
     def __init__(self, url):
         self.url = url
         self.result = defaultdict(dict)
         self.seenCat = set()
 
     def parse_main(self):
+        """
+        Parse the category menu on homepage
+        """
         resp = requests.get(self.url)
         if resp.status_code == 200:
             soup = BeautifulSoup(resp.text, "html.parser")
@@ -22,7 +27,9 @@ class yCrawler():
                 self.parse_menu(menuTag, menuName)
             
     def parse_menu(self, tag, catKey):
-
+        """
+        Find category links on each category
+        """
         # Iterate menu categories
         for catTag in tag.select('a.menulink'):
             self.add_category(catTag, catKey)
@@ -33,7 +40,9 @@ class yCrawler():
         print('\n')
 
     def parse_popup(self, popup, catKey):
-
+        """
+        Find category links on popup menus
+        """
         content = ''.join(popup.contents[1])
         popupSoup = BeautifulSoup(content, "html.parser")
         catRows = popupSoup.select('div.menu > div.catList.column > div.catRow')
@@ -48,7 +57,9 @@ class yCrawler():
 
 
     def add_category(self, tag, menuName):
-
+        """
+        Add bestsellers info to the result
+        """
         catName = tag.string
         url = tag.get('href')
         catProducts = self.parse_products(url, catName)
@@ -60,10 +71,10 @@ class yCrawler():
             self.result[menuName][catName]['url'] = url
             self.result[menuName][catName]['products'] = catProducts
 
-
-    # Parse the products page
     def parse_products(self, url, category):
-
+        """
+        Parse bestsellers on category page
+        """
         if 'z=' not in url and 'sub=' not in url:
             return []
         

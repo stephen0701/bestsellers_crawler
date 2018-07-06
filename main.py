@@ -5,7 +5,9 @@ import export
 import time
 
 def print_result(result):
-
+    """
+    Print result on CLI (command-line interface)
+    """
     try:
         for menuName, catData in result.items():
             for catName, catInfo in catData.items():
@@ -21,7 +23,9 @@ def print_result(result):
         print('.\n.\n.')
 
 def export_result(directory, result):
-
+    """
+    Save the result as JSON/CSV/EXCEL file
+    """
     while True:
         print('What kind of file would you like to export the result?')
         x = input('[1].json [2].csv [3].xlsx [4] Above all (Enter r to return): ')
